@@ -6,16 +6,15 @@ export default class App extends Component {
      super(props);
  
      this.state = {
-        weather : []
+        weathers : []
      };
  }
  
   componentWillMount() {
     axios
     .get('/api')
-    .then(response => console.log(response.data))
-    // .then(response => response.data)
-    // .then(weather => this.setState({ weather }));
+    .then(response => response.data)
+    .then(weathers => this.setState({ weathers }));
  
  }
  
@@ -23,14 +22,18 @@ export default class App extends Component {
  
    
     return (
+        
+
+    <div className='App container jumbotron'>
+        <h1>Weather Forecasts</h1>
+        <p>Check out the weather in any city.</p>
         <pre>
-	{ JSON.stringify(this.state.weather, null, 2) }
+	        { JSON.stringify(this.state.weathers, null, 2) }
         </pre>
 
+    </div>
 
-    //   <div className='App container jumbotron'>
-    //     <h1>Weather Forecast</h1>
-    //     <p>Check out the weather in any city.</p>
+      
      
      
     //   {
@@ -45,7 +48,6 @@ export default class App extends Component {
     //   }
      
      
-    //   </div>
      
      
  
