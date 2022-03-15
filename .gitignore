@@ -1,2 +1,11 @@
 node_modules
 dist
+ 
+// .gitignore
+ 
+# api keys
+.env      
+ 
+# dependencies
+/node_modules
+...
