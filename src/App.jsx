@@ -1,61 +1,57 @@
 import React, { Component } from 'react';
 import axios from 'axios';
- 
-export default class App extends Component {
- constructor(props) {
-     super(props);
- 
-     this.state = {
-        weathers : []
-     };
- }
- 
-  componentWillMount() {
-    axios
-    .get('/api')
-    .then(response => response.data)
-    .then(weathers => this.setState({ weathers }));
- 
- }
- 
+import Weather from './weather';
+import Header from './header';
+import Dropdown from './dropdown';
+import Welcome from './welcome';
+
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            cityInfo:{
+
+            },
+           weathers : []
+        };
+        // this.componentWillMount = this.componentWillMount.bind(this);
+    }
+  
+    // componentWillMount() {
+    //     axios
+    //     .get('/api')
+    //     .then(response => response.data)
+    //     .then(weathers => this.setState({ weathers }));
+     
+    //  }
+  
   render() {
- 
-   
+    
     return (
+        <div className="container my-4">
+            <Header/>
+        <div className="row">
+
+        <div className="col-lg-4 col-md-4 mb-4">
+          <Dropdown/>
+        </div>
+
+        <div className="col-lg-8 col-md-8 mb-8">
         
+            {this.state.weathers.length == 0 ? <Welcome/> : 
+            <Weather/>
+            }
+        </div>
 
-    <div className='App container jumbotron'>
-        <h1>Weather Forecasts</h1>
-        <p>Check out the weather in any city.</p>
-        <pre>
-	        { JSON.stringify(this.state.weathers, null, 2) }
-        </pre>
+        </div>
 
-    </div>
+        </div>
 
-      
-     
-     
-    //   {
-    //     this.state.topspots.map(topspot => (
-    //       <TopSpot
-    //         key={topspot.id}
-    //         name={topspot.name}
-    //         description={topspot.description}
-    //         location={topspot.location}
-    //       />
-    //     ))
-    //   }
-     
-     
-     
-     
- 
-    );
- 
-   
- 
-   
+
+    ); 
   }
- 
 }
+
+export default App;
