@@ -2,17 +2,19 @@ const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
 const app = express();
+const city = "London,uk"
 
 app.use(express.static('dist'));
 app.use(express.static('public'));
 
-app.get('/api', (req, res) => {
-    console.log("we are hitting the api")
+app.get('/api/:cityName', (req, res) => {
+    let cityName = req.params.cityName
+    console.log("cityName")
     axios({
         method:"get",
         url: `https://community-open-weather-map.p.rapidapi.com/weather`,
         params: {
-            q: 'London,uk',
+            q: cityName,
           },
         headers: {
             "Content-Type": "application/json",
@@ -21,7 +23,7 @@ app.get('/api', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            //console.log(result.data)
             res.send(result.data);
         })
         .catch((error) => {
