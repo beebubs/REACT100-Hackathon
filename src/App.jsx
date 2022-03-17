@@ -13,6 +13,7 @@ class App extends Component {
         this.state = {
             cityInfoObj:{
                 cityName:"",
+                cityParam: "",
                 temp: "",
                 weather: "",
                 showInfo: false
@@ -25,7 +26,7 @@ class App extends Component {
     }
 
     handleChange(event){
-        //store value for input description and priority
+        //sets state to the value of the selected city in the dropdown menu 
         //creates a deep copy of the object
         console.log(event.target.value)
         console.log(event.target.name)
@@ -43,10 +44,12 @@ class App extends Component {
     }
 
     handleClick(event){
+        //sets state of cityInfoObj to name, temp and weather from API object
+        //sets state of showInfo to true to allow the welcome message to chagnge to weather info panel
         console.log("handle click");
         let copy = JSON.parse(JSON.stringify(this.state.cityInfoObj));
         axios
-            .get(`/api/${this.state.cityInfoObj.cityName}`)
+            .get(`/api/${this.state.cityInfoObj.cityParam}`)
             .then((response) => {
                 console.log(response);
                 copy = {
@@ -80,7 +83,10 @@ class App extends Component {
         <div className="col-lg-8 col-md-8 mb-8">
         
             {this.state.cityInfoObj.showInfo == false ? <Welcome/> : 
-            <Weather/>
+            <Weather
+                cityInfoObj = {this.state.cityInfoObj}
+                handleChange = {this.handleChange}
+            />
             }
         </div>
 

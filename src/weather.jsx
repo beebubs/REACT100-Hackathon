@@ -7,10 +7,14 @@ class Weather extends Component {
       return (
         
         
-    <div className='well'>
-	    {/* <h4>{this.props.name}</h4>
-	    <p>{this.props.weathers}</p> */}
-        <h4>Hello!!!</h4>
+    
+    <div className="panel panel-default">
+    <div className="panel-heading">Weather in {this.props.cityInfoObj.cityName}</div>
+    <div className="panel-body">
+	    <h4>{this.props.cityInfoObj.cityName}</h4>
+	    <p>{this.props.cityInfoObj.weather}</p>
+      <p>{this.props.cityInfoObj.temp}</p>
+    </div>
     </div>
      
       );

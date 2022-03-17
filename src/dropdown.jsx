@@ -3,7 +3,6 @@ import React, { Component } from "react";
 class Dropdown extends Component {
   render() {
     return (
-        <div style={{backgroundColor: 'lavender'}}>
         <div className="panel panel-default">
           <div className="panel-heading ">Cities</div>
             <form className="form-horizontal card card-body">
@@ -14,8 +13,8 @@ class Dropdown extends Component {
                     {/*select menu for priority*/}
                     <h6>Check out the weather in any city below:</h6>
                     <select 
-                    name="cityName" 
-                    value= {this.props.name}
+                    name="cityParam" 
+                    value= {this.props.cityParam}
                     onChange = {(e) => this.props.handleChange(e)}
                     className="create-todo-priority form-select" required>
                       <option>Select A City</option>
@@ -45,7 +44,7 @@ class Dropdown extends Component {
                 </form>
 
         </div>
-      </div>
+      
     );
   }
 }
