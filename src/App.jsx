@@ -45,21 +45,28 @@ class App extends Component {
 
     handleClick(event){
         //sets state of cityInfoObj to name, temp and weather from API object
-        //sets state of showInfo to true to allow the welcome message to chagnge to weather info panel
+        //converts temp from response.data from kelvins to farenheit before setting state
+        //sets state of showInfo to true to allow the welcome message to change to weather info panel
         console.log("handle click");
         let copy = JSON.parse(JSON.stringify(this.state.cityInfoObj));
         axios
             .get(`/api/${this.state.cityInfoObj.cityParam}`)
             .then((response) => {
-                console.log(response);
+                console.log(response.data);
+                let kelvins = response.data.main.temp
+                let farenheit = Math.round(((kelvins-273.15)*1.8)+32);
                 copy = {
                     cityName: response.data.name,
-                    temp: response.data.main.temp,
+                    temp: farenheit,
                     weather: response.data.weather[0].description,
                     showInfo: true
                 }
                 this.setState({cityInfoObj: copy});
+                //this.convertTemp();
                 });
+        
+
+        
 
     }
 
