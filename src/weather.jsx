@@ -22,6 +22,18 @@ class Weather extends Component {
       </div>
       </div>
 
+      <h4>Show Time Here</h4>
+
+      <div className="form-group">
+          <div className="col-sm-offset-2 col-sm-10">
+            <button className="btn btn-primary" type="button" name="submit"
+                onClick={(e) => {
+                // e.preventDefault();
+                this.props.checkTimeButton(e);
+            }}>Check Time</button>
+          </div>
+      </div>
+
 
         
 

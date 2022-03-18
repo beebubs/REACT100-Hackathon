@@ -16,13 +16,17 @@ class App extends Component {
                 cityParam: "",
                 temp: "",
                 weather: "",
-                showInfo: false
+                showInfo: false,
+                wikiID: "",
+                showTime: false,
+                cityTime: ""
 
-            },
-           //cityInfoArr : []
+            }
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.setWikiID = this.setWikiID.bind(this);
+        this.checkTimeButton = this.checkTimeButton.bind(this);
     }
 
     handleChange(event){
@@ -38,37 +42,88 @@ class App extends Component {
         //copy.cityName = value;
         this.setState({
         cityInfoObj: copy
-    });
+        });
+        this.setWikiID();
+
+    }
+
+    //set WikiID based on cityParam
+    setWikiID(){
+        let cityParamVar = this.state.cityInfoObj.cityParam;
+        let wikiIDVar = "";
+        if(cityParamVar == "Corinto,NI"){
+            wikiIDVar = "Q1132939";
+        } 
+        if(cityParamVar == "Los Angeles,US"){
+            wikiIDVar ="Q65";
+        }
+        if(cityParamVar == "Hong Kong,CN"){
+            wikiIDVar ="Q8646";
+        }
+        if(cityParamVar == "London,UK"){
+            wikiIDVar ="Q84";
+        }
+        if(cityParamVar == "Berlin,DE"){
+            wikiIDVar ="Q64";
+        }
+        if(cityParamVar == "Sydney,AU"){
+            wikiIDVar ="Q3130";
+        }
+        if(cityParamVar == "Guatemala City,GT"){
+            wikiIDVar ="Q1555";
+        }
+        console.log(wikiIDVar);
+        return wikiIDVar;
+
+    }
     
         
-    }
+    
 
     handleClick(event){
         //sets state of cityInfoObj to name, temp and weather from API object
-        //converts temp from response.data from kelvins to farenheit before setting state
+        //sets cityParamVar to the state of cityParam from handleChange(), then uses that to set state of cityParam
+        //converts temp from response.data from kelvins to farenheit before setting state of temp
         //sets state of showInfo to true to allow the welcome message to change to weather info panel
         console.log("handle click");
+        let wikiIDVar = this.setWikiID();
+        console.log("wikiIDVar", wikiIDVar);
         let copy = JSON.parse(JSON.stringify(this.state.cityInfoObj));
+        let cityParamVar = this.state.cityInfoObj.cityParam;
         axios
-            .get(`/api/${this.state.cityInfoObj.cityParam}`)
+            .get(`/api/${cityParamVar}`)
             .then((response) => {
                 console.log(response.data);
-                let kelvins = response.data.main.temp
+                let kelvins = response.data.main.temp;
                 let farenheit = Math.round(((kelvins-273.15)*1.8)+32);
                 copy = {
                     cityName: response.data.name,
                     temp: farenheit,
                     weather: response.data.weather[0].description,
-                    showInfo: true
+                    showInfo: true,
+                    cityParam: cityParamVar,
+                    wikiID: wikiIDVar 
                 }
                 this.setState({cityInfoObj: copy});
-                //this.convertTemp();
-                });
-        
-
-        
+                });    
 
     }
+
+    checkTimeButton(event){
+        console.log("check time button is clicked");
+        let wikiIDVar = this.state.cityInfoObj.wikiID;
+        console.log("WikiID in check time", wikiIDVar);
+        axios
+            .get(`/time/${wikiIDVar}`)
+            .then((response) => {
+                console.log("response.data for city time API once clicked", response.data);
+           
+                });   
+
+
+    }
+
+
 
 
     
@@ -93,6 +148,7 @@ class App extends Component {
             <Weather
                 cityInfoObj = {this.state.cityInfoObj}
                 handleChange = {this.handleChange}
+                checkTimeButton={this.checkTimeButton}
             />
             }
         </div>

@@ -1,8 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
+//app proxy server
 const app = express();
-//const city = "London,uk"
+
 
 app.use(express.static('dist'));
 app.use(express.static('public'));
@@ -24,6 +25,31 @@ app.get('/api/:cityParam', (req, res) => {
     })
         .then((result) => {
             //console.log(result.data)
+            res.send(result.data);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.send('An error occured.');
+        })
+});
+
+app.get('/time/:wikiID', (req, res) => {
+    let wikiID = req.params.wikiID
+    console.log("wikiID", wikiID)
+    axios({
+        method:"get",
+        url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/Q1132939/time`,
+        params: {
+            cityid: wikiID,
+          },
+        headers: {
+            "Content-Type": "application/json",
+            'x-rapidapi-host': 'wft-geo-db.p.rapidapi.co',
+            'x-rapidapi-key': process.env.X_RAPIDAPI_KEY
+        }
+    })
+        .then((result) => {
+            console.log("result.data for city time api", result.data)
             res.send(result.data);
         })
         .catch((error) => {
