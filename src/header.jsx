@@ -5,7 +5,7 @@ class Header extends Component {
     return (
     <div className='App container jumbotron'>
             <h1>Weather Forecasts</h1>
-            <p>Check out the weather in any city.</p>
+            <p>Check out the weather in any of the cites below.</p>
             <hr/>
     </div>
     );

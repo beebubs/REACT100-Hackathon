@@ -38,7 +38,7 @@ app.get('/time/:wikiID', (req, res) => {
     console.log("wikiID", wikiID)
     axios({
         method:"get",
-        url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/Q1132939/time`,
+        url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${wikiID}/time`,
         params: {
             cityid: wikiID,
           },
@@ -49,8 +49,8 @@ app.get('/time/:wikiID', (req, res) => {
         }
     })
         .then((result) => {
-            console.log("result.data for city time api", result.data)
             res.send(result.data);
+            console.log("result.data for city time api", result.data)
         })
         .catch((error) => {
             console.error(error);

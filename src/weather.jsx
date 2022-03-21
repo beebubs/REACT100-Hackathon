@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import WeatherDetails from './weatherDetails';
+import ShowTime from './showTime';
 
 class Weather extends Component {
     render() {
@@ -9,46 +11,22 @@ class Weather extends Component {
         
     
     <div className="panel panel-default">
-    <div className="panel-heading">Weather in {this.props.cityInfoObj.cityName}</div>
+    <div className="panel-heading">{this.props.cityInfoObj.cityName}</div>
     <div className="panel-body">
 
-      
-      <div className="media">
-        <img className="mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHZodP2YkVt0-QrBSSqoFMzs0ZypRYwRnxSg&usqp=CAU" alt="Generic placeholder image"/>
-      <div className="media-body">
-        <h5 className="mt-0">{this.props.cityInfoObj.cityName}</h5>
-        <p>{this.props.cityInfoObj.weather}</p>
-        <p>{this.props.cityInfoObj.temp} degrees</p>
-      </div>
-      </div>
+      {this.props.cityInfoObj.showTime == false ?
+      <WeatherDetails cityInfoObj = {this.props.cityInfoObj}
+        handleChange = {this.props.handleChange}
+        checkTimeButton={this.props.checkTimeButton}/>
 
-      <h4>Show Time Here</h4>
-
-      <div className="form-group">
-          <div className="col-sm-offset-2 col-sm-10">
-            <button className="btn btn-primary" type="button" name="submit"
-                onClick={(e) => {
-                // e.preventDefault();
-                this.props.checkTimeButton(e);
-            }}>Check Time</button>
-          </div>
-      </div>
-
-
-        
-
-        
-        
+      :
+      <ShowTime cityInfoObj = {this.props.cityInfoObj}
+        handleChange = {this.props.handleChange}
+        checkTimeButton={this.props.checkTimeButton}/>
+      }
 
 
 
-
-
-
-
-	    {/* <h4>{this.props.cityInfoObj.cityName}</h4>
-	    <p>{this.props.cityInfoObj.weather}</p>
-      <p>{this.props.cityInfoObj.temp}</p> */}
     </div>
     </div>
      

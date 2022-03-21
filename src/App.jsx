@@ -57,9 +57,6 @@ class App extends Component {
         if(cityParamVar == "Los Angeles,US"){
             wikiIDVar ="Q65";
         }
-        if(cityParamVar == "Hong Kong,CN"){
-            wikiIDVar ="Q8646";
-        }
         if(cityParamVar == "London,UK"){
             wikiIDVar ="Q84";
         }
@@ -95,14 +92,15 @@ class App extends Component {
             .then((response) => {
                 console.log(response.data);
                 let kelvins = response.data.main.temp;
-                let farenheit = Math.round(((kelvins-273.15)*1.8)+32);
+                let farenheit = Math.round(((kelvins-273.15)*1.8)+32) + " degrees";
                 copy = {
                     cityName: response.data.name,
                     temp: farenheit,
                     weather: response.data.weather[0].description,
                     showInfo: true,
                     cityParam: cityParamVar,
-                    wikiID: wikiIDVar 
+                    wikiID: wikiIDVar,
+                    showTime: false 
                 }
                 this.setState({cityInfoObj: copy});
                 });    
@@ -111,14 +109,28 @@ class App extends Component {
 
     checkTimeButton(event){
         console.log("check time button is clicked");
-        let wikiIDVar = this.state.cityInfoObj.wikiID;
-        console.log("WikiID in check time", wikiIDVar);
+        let wikiID = this.state.cityInfoObj.wikiID;
+        console.log("WikiID in check time", wikiID);
+        let cityParamVar = this.state.cityInfoObj.cityParam;
+        console.log("cityParamVar", cityParamVar);
+        let cityNameVar = this.state.cityInfoObj.cityName;
+        let copy = JSON.parse(JSON.stringify(this.state.cityInfoObj));
         axios
-            .get(`/time/${wikiIDVar}`)
+            .get(`/time/${wikiID}`)
             .then((response) => {
-                console.log("response.data for city time API once clicked", response.data);
-           
-                });   
+                console.log("response.data for city time API once clicked", response.data.data);
+                let time = (response.data.data).split(":", 2).join(":");
+                console.log(time);
+                console.log("copy", copy);
+                copy = {
+                    cityTime: time,
+                    showTime: true,
+                    cityParam: cityParamVar,
+                    cityName: cityNameVar
+                }
+                this.setState({cityInfoObj: copy});
+
+            });   
 
 
     }
@@ -151,6 +163,9 @@ class App extends Component {
                 checkTimeButton={this.checkTimeButton}
             />
             }
+
+
+
         </div>
 
         </div>

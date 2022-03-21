@@ -10,8 +10,8 @@ class Dropdown extends Component {
                 <div className="col-sm-10">
                   
 
-                    {/*select menu for priority*/}
-                    <h6>Check out the weather in any city below:</h6>
+                    {/*select menu for cities*/}
+                    <h6>List of Cities:</h6>
                     <select 
                     name="cityParam" 
                     value= {this.props.cityParam}
@@ -22,7 +22,6 @@ class Dropdown extends Component {
                       <option value="London,UK">London, UK</option>
                       <option value="Berlin,DE">Berlin, DE</option>
                       <option value="Sydney,AU">Sydney, AU</option>
-                      <option value="Hong Kong,CN">Hong Kong, CN</option>
                       <option value="Guatemala City,GT">Guatemala City, GT</option>
                       <option value="Corinto,NI">Corinto, NI</option>
                     </select>
@@ -36,7 +35,6 @@ class Dropdown extends Component {
                 <div className="col-sm-offset-2 col-sm-10">
                 <button className="btn btn-primary" type="button" name="submit"
                 onClick={(e) => {
-                  // e.preventDefault();
                   this.props.handleClick(e);
                 }}>Check Weather</button>
                 </div>
