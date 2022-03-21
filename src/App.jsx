@@ -107,6 +107,7 @@ class App extends Component {
 
     }
 
+    //shows time of selected city when clicked
     checkTimeButton(event){
         console.log("check time button is clicked");
         let wikiID = this.state.cityInfoObj.wikiID;
@@ -135,10 +136,7 @@ class App extends Component {
 
     }
 
-
-
-
-    
+ 
   
   render() {
     
@@ -163,8 +161,6 @@ class App extends Component {
                 checkTimeButton={this.checkTimeButton}
             />
             }
-
-
 
         </div>
 
